@@ -35,7 +35,7 @@
                                 <td>{{ $row->phone_supplier }}</td>
                                 <td>{{ $row->email_supplier }}</td>
                                 <td>
-                                    <a href="{{ route('supplier.show', $row->id) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('supplier.show', $row->id_user) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-fw fa-eye"></i>
                                     </a>
                                 </td>

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('address_supplier');
             $table->string('phone_supplier');
             $table->string('email_supplier');
+            $table->string('id_user');
             $table->timestamps();
         });
     }
