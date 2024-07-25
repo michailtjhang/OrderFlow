@@ -9,6 +9,9 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
+         <!-- ======================== Icon ========================= -->
+    <link rel="icon" type="image/x-svg" href="{{ asset('img/icon.svg') }}">
+
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/plugins/fontawesome-free/css/all.min.css">
 
     <link rel="stylesheet" href="{{ asset('assets/vendor/adminlte') }}/dist/css/adminlte.min.css?v=3.2.0">
@@ -90,8 +93,8 @@
                 </li>
             </ul>
         </nav>
-        
-        @include('layouts.sidebar')
+
+        @include('layouts.navigation')
 
         <div class="content-wrapper">
             <section class="content-header">
@@ -115,10 +118,10 @@
             reserved.
         </footer>
     </div>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/jquery/jquery.min.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets/vendor/adminlte') }}/dist/js/adminlte.min.js?v=3.2.0"></script>
-    <script>
+    <script src="{{ asset('assets/vendor/adminlte/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+    {{-- <script>
         function formatRupiah(angka, prefix) {
             var number_string = angka.replace(/[^,\d]/g, '').toString(),
                 split = number_string.split(','),
@@ -135,7 +138,7 @@
             rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
             return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
         }
-    </script>
+    </script> --}}
     @yield('js')
 </body>
 
