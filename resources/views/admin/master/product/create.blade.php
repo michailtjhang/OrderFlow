@@ -17,9 +17,35 @@
                 <div class="form-group">
                     <label for="nama">Nama Product</label>
                     <input type="text" name="nama" id="nama" class="form-control @error('nama') is-invalid @enderror"
-                        placeholder="Isikan Nama" value="{{ old('nama') }}">
+                        placeholder="Isikan Nama">
 
                     @error('nama')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+                <div class="form-group">
+                    <label for="harga">Harga Satuan Product</label>
+                    <input type="text" inputmode="numeric" name="harga" id="harga" class="form-control @error('harga') is-invalid @enderror"
+                        placeholder="Isikan Harga Satuan Product">
+
+                    @error('harga')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+                <div class="form-group">
+                    <label for="stok">Stok Product</label>
+                    <input type="text" inputmode="numeric" name="stok" id="stok" class="form-control @error('stok') is-invalid @enderror"
+                        placeholder="Isikan Harga Satuan Product">
+
+                    @error('stok')
                         <div class="invalid-feedback">
                             {{ $message }}
                         </div>

@@ -9,7 +9,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => ['auth', 'role:admin-staff']], function () {
+Route::group(['middleware' => ['auth', 'role:admin-supplier-user']], function () {
     Route::prefix('admin')->group(function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

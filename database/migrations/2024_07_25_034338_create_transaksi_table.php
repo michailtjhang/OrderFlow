@@ -16,6 +16,7 @@ return new class extends Migration
             $table->char('id_transaksi', 5)->unique();
             $table->unsignedBigInteger('user_id');
             $table->integer('total_harga');
+            $table->date('tgl_beli');
             $table->timestamps();
             
             $table->foreign('user_id')

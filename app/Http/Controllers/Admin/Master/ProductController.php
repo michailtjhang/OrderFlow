@@ -35,9 +35,13 @@ class ProductController extends Controller
         $request->validate(
             [
                 'nama' => 'required | min:3 | string',
+                'harga' => 'required | min:4 | numeric',
+                'stok' => 'required | min:1 | numeric',
             ],
             [
                 'nama.required' => 'Masukan Nama Product',
+                'harga.required' => 'Masukan Harga Product',
+                'stok.required' => 'Masukan Stok Product',
             ]
         );
 
@@ -55,6 +59,9 @@ class ProductController extends Controller
         Product::create([
             'id_product' => $kodeSocials,
             'name_product' => $request->nama,
+            'harga_satuan' => $request->harga,
+            'stok_product' => $request->stok,
+            'id_user' => auth()->user()->id,
         ]);
 
         return redirect('/admin/product');
@@ -89,14 +96,20 @@ class ProductController extends Controller
         $request->validate(
             [
                 'nama' => 'required | min:3 | string',
+                'harga' => 'required | min:4 | numeric',
+                'stok' => 'required | min:1 | numeric',
             ],
             [
                 'nama.required' => 'Masukan Nama Product',
+                'harga.required' => 'Masukan Harga Product',
+                'stok.required' => 'Masukan Stok Product',
             ]
         );
 
         Product::where('id', $id)->update([
             'name_product' => $request->nama,
+            'harga_satuan' => $request->harga,
+            'stok_product' => $request->stok,
         ]);
 
         return redirect('/admin/product');
@@ -107,6 +120,9 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect('/admin/product')->with('success', 'Product deleted successfully');
     }
 }

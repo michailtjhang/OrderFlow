@@ -15,6 +15,7 @@ class Product extends Model
         'id_product',
         'name_product',
         'harga_satuan',
-        'stok_product'
+        'stok_product',
+        'id_user',
     ];
 }

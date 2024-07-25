@@ -36,60 +36,44 @@
                                     <a href="{{ route('product.edit', $row->id) }}" class="btn btn-sm btn-warning">
                                         <i class="fas fa-fw fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ $row->id }}, '{{ $row->name_product }}')">
+                                    <button type="button" class="btn btn-sm btn-danger"
+                                        onclick="confirmDelete('{{ route('product.destroy', $row->id) }}', '{{ $row->name_product }}')">
                                         <i class="fas fa-fw fa-trash"></i>
                                     </button>
-                                    
+
                                     <script>
-                                    function confirmDelete(id, productName) {
-                                        Swal.fire({
-                                            title: "Are you sure?",
-                                            text: `You won't be able to revert this! This will delete "${productName}".`,
-                                            icon: "warning",
-                                            showCancelButton: true,
-                                            confirmButtonColor: "#d33",
-                                            cancelButtonColor: "#3085d6",
-                                            confirmButtonText: "Yes, delete it!"
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                // Create a form dynamically
-                                                var form = document.createElement('form');
-                                                form.method = 'POST';
-                                                form.action = ''; // Add your delete route here
-                                    
-                                                // Add CSRF token
-                                                var csrfToken = document.createElement('input');
-                                                csrfToken.type = 'hidden';
-                                                csrfToken.name = '_token';
-                                                csrfToken.value = '{{ csrf_token() }}';
-                                                form.appendChild(csrfToken);
-                                    
-                                                // Add method spoofing for DELETE
-                                                var methodField = document.createElement('input');
-                                                methodField.type = 'hidden';
-                                                methodField.name = '_method';
-                                                methodField.value = 'DELETE';
-                                                form.appendChild(methodField);
-                                    
-                                                // Add ID if needed
-                                                var idField = document.createElement('input');
-                                                idField.type = 'hidden';
-                                                idField.name = 'id';
-                                                idField.value = id;
-                                                form.appendChild(idField);
-                                    
-                                                // Append form to body and submit
-                                                document.body.appendChild(form);
-                                                form.submit();
-                                    
-                                                Swal.fire({
-                                                    title: "Deleted!",
-                                                    text: "Your file has been deleted.",
-                                                    icon: "success"
-                                                });
-                                            }
-                                        });
-                                    }
+                                        function confirmDelete(deleteUrl, productName) {
+                                            Swal.fire({
+                                                title: "Are you sure?",
+                                                text: `You won't be able to revert this! This will delete ${productName}.`,
+                                                icon: "warning",
+                                                showCancelButton: true,
+                                                confirmButtonColor: "#3085d6",
+                                                cancelButtonColor: "#d33",
+                                                confirmButtonText: "Yes, delete it!"
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    var form = document.createElement('form');
+                                                    form.method = 'POST';
+                                                    form.action = deleteUrl;
+
+                                                    var csrfToken = document.createElement('input');
+                                                    csrfToken.type = 'hidden';
+                                                    csrfToken.name = '_token';
+                                                    csrfToken.value = '{{ csrf_token() }}';
+                                                    form.appendChild(csrfToken);
+
+                                                    var methodField = document.createElement('input');
+                                                    methodField.type = 'hidden';
+                                                    methodField.name = '_method';
+                                                    methodField.value = 'DELETE';
+                                                    form.appendChild(methodField);
+
+                                                    document.body.appendChild(form);
+                                                    form.submit();
+                                                }
+                                            });
+                                        }
                                     </script>
                                 </td>
                             </tr>

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->char('id_product', 6);
             $table->string('name_product');
             $table->double('harga_satuan')->default(0);
-            $table->integer('stok_product');
+            $table->integer('stok_product')->default(0);
+            $table->string('id_user');
             $table->timestamps();
         });
     }

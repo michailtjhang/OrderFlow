@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->char('id_user', 5)->unique();
             $table->string('name');
-            $table->string('nim')->unique();
+            $table->string('nim')->unique()->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin', 'staff'])->default('staff');
+            $table->enum('role', ['admin', 'supplier', 'user'])->default('user');
             $table->string('profile_photo_path', 2048)->nullable();
             $table->rememberToken();
             $table->timestamps();

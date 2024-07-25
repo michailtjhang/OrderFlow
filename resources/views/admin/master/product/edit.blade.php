@@ -28,6 +28,32 @@
 
                 </div>
 
+                <div class="form-group">
+                    <label for="harga">Harga Satuan Product</label>
+                    <input type="text" inputmode="numeric" name="harga" id="harga" class="form-control @error('harga') is-invalid @enderror"
+                        placeholder="Isikan Harga Satuan Product" value="{{ $data->harga_satuan }}">
+
+                    @error('harga')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
+                <div class="form-group">
+                    <label for="stok">Stok Product</label>
+                    <input type="text" inputmode="numeric" name="stok" id="stok" class="form-control @error('stok') is-invalid @enderror"
+                        placeholder="Isikan Harga Satuan Product" value="{{ $data->stok_product }}">
+
+                    @error('stok')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                </div>
+
                 <button type="submit" class="btn btn-warning">Ubah</button>
             </form>
         </div>
