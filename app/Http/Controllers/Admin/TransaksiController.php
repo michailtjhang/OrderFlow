@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use App\Models\TransaksiItem;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 
 class TransaksiController extends Controller
 {
@@ -17,11 +18,36 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $data = Transaksi::with('item')->get();
+         // Ambil bulan dan tahun saat ini
+         $currentMonth = Carbon::now()->month;
+         $currentYear = Carbon::now()->year;
+ 
+         // Query untuk mengambil data transaksi berdasarkan bulan dan tahun saat ini
+         $data = Transaksi::whereMonth('tgl_beli', $currentMonth)
+             ->whereYear('tgl_beli', $currentYear)
+             ->with('item')
+             ->get();
+
+             // Misalnya $data[0]->tgl_beli adalah string tanggal
+        $tgl_beli = $data[0]->tgl_beli;
+
+        // Konversi string tanggal menjadi objek Carbon
+        $date = Carbon::parse($tgl_beli);
+
+        // Set locale ke bahasa Indonesia (opsional, sesuaikan dengan kebutuhan)
+        Carbon::setLocale('id');
+
+        // Format tanggal menjadi nama bulan
+        $month = $date->translatedFormat('F');
+
+        // Jika Anda ingin menyimpan hasilnya dalam array atau variabel lain
+        $data[0]->month_name = $month;
+
+        $title = 'Laporan Transaksi ' . $month . ' ' . $currentYear;
 
         return view('admin.transaksi.index', [
-            'page_title' => 'Daftar Transaksi',
-            'data' => $data
+            'page_title' => $title,
+            'data' => $data,
         ]);
     }
 
@@ -121,5 +147,48 @@ class TransaksiController extends Controller
     {
         $products = Product::where('id_supplier', $supplier_id)->get();
         return response()->json($products);
+    }
+
+    public function exportItemsPdf($id)
+    {
+        $data = TransaksiItem::where('id_transaksi', $id)->get();
+        $pdf = Pdf::loadView('admin.transaksi.exportitem', [
+            'id_invoice' => $data[0]->id_transaksi,
+            'data' => $data
+        ])->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
+    public function exportPdf()
+    {
+        // Ambil bulan dan tahun saat ini
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        // Query untuk mengambil data transaksi berdasarkan bulan dan tahun saat ini
+        $data = Transaksi::whereMonth('tgl_beli', $currentMonth)
+            ->whereYear('tgl_beli', $currentYear)
+            ->get();
+
+        // Misalnya $data[0]->tgl_beli adalah string tanggal
+        $tgl_beli = $data[0]->tgl_beli;
+
+        // Konversi string tanggal menjadi objek Carbon
+        $date = Carbon::parse($tgl_beli);
+
+        // Set locale ke bahasa Indonesia (opsional, sesuaikan dengan kebutuhan)
+        Carbon::setLocale('id');
+
+        // Format tanggal menjadi nama bulan
+        $month = $date->translatedFormat('F');
+
+        // Jika Anda ingin menyimpan hasilnya dalam array atau variabel lain
+        $data[0]->month_name = $month;
+
+        $pdf = Pdf::loadView('admin.transaksi.exportpdf', [
+            'id_invoice' => $data[0]->id_transaksi,
+            'data' => $data,
+            'month' => $month,
+        ])->setPaper('a4', 'landscape');
+        return $pdf->stream();
     }
 }

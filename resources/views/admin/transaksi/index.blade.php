@@ -5,7 +5,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <a href="{{ route('supplier.create') }}" class="btn btn-danger mb-2 btn-sm">Export PDF</a>
+                <a href="{{ route('export-pdf') }}" class="btn btn-danger mb-2 btn-sm">Export PDF</a>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -32,9 +32,9 @@
                                 <td>Rp. {{ number_format($row->total_harga) }}</td>
                                 <td>{{ $row->tgl_beli }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-danger">
+                                    <a href="{{ url('admin/export-items-pdf', $row->id_transaksi) }}" class="btn btn-sm btn-danger">
                                         <i class="fas fa-fw fa-file-pdf"></i>
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach

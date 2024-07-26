@@ -21,6 +21,9 @@ Route::group(['middleware' => ['auth', 'role:admin-supplier-user']], function ()
         Route::resource('transaksi', TransaksiController::class);
 
         Route::get('/get-products/{supplier_id}', [TransaksiController::class, 'getProductsBySupplier']);
+
+        Route::get('/export-items-pdf/{transaksi_id}', [TransaksiController::class, 'exportItemsPdf']);
+        Route::get('/export-pdf', [TransaksiController::class, 'exportPdf'])->name('export-pdf');
     });
 });
 

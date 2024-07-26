@@ -5,18 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Invoice #{{ $id_invoice }}</title>
     <style>
         body {
             margin-top: 20px;
-            background-color: #eee;
+            font-family: Arial, sans-serif;
         }
 
         .card {
             box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
-        }
-
-        .card {
             position: relative;
             display: flex;
             flex-direction: column;
@@ -26,14 +23,72 @@
             background-clip: border-box;
             border: 0 solid rgba(0, 0, 0, .125);
             border-radius: 1rem;
+            padding: 20px;
+        }
+
+        .invoice-title h4 {
+            margin-bottom: 0;
+        }
+
+        .invoice-title h2 {
+            margin-bottom: 10px;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+            text-align: center;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .table tbody+tbody {
+            border-top: 2px solid #dee2e6;
+        }
+
+        .table .table {
+            background-color: #fff;
+        }
+
+        .text-end {
+            text-align: right !important;
+        }
+
+        .border-0 {
+            border: 0 !important;
+        }
+
+        .fw-semibold {
+            font-weight: 600 !important;
+        }
+
+        .mb-0 {
+            margin-bottom: 0 !important;
+        }
+
+        .mb-1 {
+            margin-bottom: .25rem !important;
+        }
+
+        .ms-2 {
+            margin-left: .5rem !important;
         }
     </style>
 </head>
 
 <body>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
-        integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -64,19 +119,24 @@
                                         </tr>
                                     </thead><!-- end thead -->
                                     <tbody>
+                                        @php
+                                            $total = 0;
+                                        @endphp
                                         @foreach ($data as $row)
                                             <tr>
                                                 <th scope="row">{{ $loop->iteration }}</th>
-                                                <td>
-                                                    <div>
-                                                        <h5 class="text-truncate font-size-14 mb-1">{{ $row->name_product }}
-                                                        </h5>
-                                                    </div>
-                                                </td>
-                                                <td>Rp {{ number_format($row->price, 0, ',', '.') }}</td>
+                                                <td>{{ $row->nama }}</td>
+                                                <td>Rp {{ number_format($row->harga, 0, ',', '.') }}</td>
                                                 <td>{{ $row->quantity }}</td>
-                                                <td class="text-end">Rp {{ number_format($row->total_harga, 0, ',', '.') }}</td>
+                                                @php
+                                                    $total_harga = $row->quantity * $row->harga;
+                                                @endphp
+                                                <td class="text-end">Rp {{ number_format($total_harga, 0, ',', '.') }}
+                                                </td>
                                             </tr>
+                                            @php
+                                                $total += $total_harga;
+                                            @endphp
                                         @endforeach
                                         <!-- end tr -->
                                         <tr>
