@@ -81,8 +81,8 @@ class SupplierController extends Controller
         if ($dataSupplier == null) {
             $kodeSupplier = $Code . '001';
         } else {
-            $kode = substr($dataSupplier->id_product, 2, 3) + 1;
-            $kode = str_pad($kode, 4, '0', STR_PAD_LEFT);
+            $kode = substr($dataSupplier->id_supplier, 2, 3) + 1;
+            $kode = str_pad($kode, 3, '0', STR_PAD_LEFT);
             $kodeSupplier = $Code . $kode;
         }
 

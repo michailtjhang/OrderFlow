@@ -74,8 +74,8 @@ class TransaksiController extends Controller
         if ($dataTransaksi == null) {
             $kodeTransaksi = $Code . '001';
         } else {
-            $kode = substr($dataTransaksi->id_product, 2, 3) + 1;
-            $kode = str_pad($kode, 4, '0', STR_PAD_LEFT);
+            $kode = substr($dataTransaksi->id_transaksi, 2, 3) + 1;
+            $kode = str_pad($kode, 3, '0', STR_PAD_LEFT);
             $kodeTransaksi = $Code . $kode;
         }
 

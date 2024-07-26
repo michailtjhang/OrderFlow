@@ -15,7 +15,8 @@ class Supplier extends Model
         'name_supplier',
         'address_supplier',
         'phone_supplier',
-        'email_supplier'
+        'email_supplier',
+        'id_user',
     ];
 
     public function products()

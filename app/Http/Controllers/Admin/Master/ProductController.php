@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $data = Product::where('id_user', auth()->user()->id)->get();
+        $data = Product::where('id_user', auth()->user()->id_user)->get();
         return view('admin.master.product.index', [
             'data' => $data,
             'page_title' => 'Daftar Product',
@@ -57,14 +57,14 @@ class ProductController extends Controller
             $kodeProduct = $Code . $kode;
         }
 
-        $id_supplier = Supplier::where('id_user', auth()->user()->id)->first('id_supplier');
+        $id_supplier = Supplier::where('id_user', auth()->user()->id_user)->first('id_supplier');
 
         Product::create([
             'id_product' => $kodeProduct,
             'name_product' => $request->nama,
             'harga_satuan' => $request->harga,
             'stok_product' => $request->stok,
-            'id_user' => auth()->user()->id,
+            'id_user' => auth()->user()->id_user,
             'id_supplier' => $id_supplier->id_supplier,
         ]);
 
