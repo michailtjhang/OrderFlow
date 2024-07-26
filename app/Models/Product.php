@@ -17,5 +17,6 @@ class Product extends Model
         'harga_satuan',
         'stok_product',
         'id_user',
+        'id_supplier',
     ];
 }

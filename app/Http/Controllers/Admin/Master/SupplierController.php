@@ -79,15 +79,15 @@ class SupplierController extends Controller
         $Code = 'SP';
 
         if ($dataSupplier == null) {
-            $kodeSocials = $Code . '001';
+            $kodeSupplier = $Code . '001';
         } else {
             $kode = substr($dataSupplier->id_product, 2, 3) + 1;
             $kode = str_pad($kode, 4, '0', STR_PAD_LEFT);
-            $kodeSocials = $Code . $kode;
+            $kodeSupplier = $Code . $kode;
         }
 
         Supplier::create([
-            'id_supplier' => $kodeSocials,
+            'id_supplier' => $kodeSupplier,
             'name_supplier' => $request->nama,
             'address_supplier' => $request->alamat,
             'phone_supplier' => $request->telp,

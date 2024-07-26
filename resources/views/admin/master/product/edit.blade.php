@@ -54,7 +54,11 @@
 
                 </div>
 
+                @if (Auth::user()->role == 'supplier')
                 <button type="submit" class="btn btn-warning">Ubah</button>
+                @else
+                <button type="submit" class="btn btn-warning" disabled>Ubah</button>
+                @endif
             </form>
         </div>
     </div>

@@ -5,6 +5,7 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
+                <a href="{{ route('supplier.create') }}" class="btn btn-danger mb-2 btn-sm">Export PDF</a>
                 <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
@@ -17,31 +18,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($transaksis as $transaksi)
+                        @foreach ($data as $row)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $transaksi->transaksi_code }}</td>
+                                <td>{{ $row->id_transaksi }}</td>
                                 <td>
                                     <ol>
-                                        @foreach ($transaksi->items as $item)
+                                        @foreach ($row->item as $item)
                                             <li>{{ $item->nama }} ({{ $item->quantity }})</li>
                                         @endforeach
                                     </ol>
                                 </td>
-                                <td>Rp. {{ number_format($transaksi->total_harga) }}</td>
-                                <td>{{ $transaksi->created_at->toDayDateTimeString() }}</td>
+                                <td>Rp. {{ number_format($row->total_harga) }}</td>
+                                <td>{{ $row->tgl_beli }}</td>
                                 <td>
-                                    <form action="{{ route('admin.transaksi.destroy', $transaksi->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-link">
-                                            <i class="fas fa-fw fa-trash text-danger"></i>
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-fw fa-file-pdf"></i>
+                                    </button>
                                 </td>
                             </tr>
-                            <?php $no_transaksi++; ?>
                         @endforeach
                     </tbody>
                 </table>

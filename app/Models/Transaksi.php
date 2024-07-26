@@ -11,8 +11,14 @@ class Transaksi extends Model
 
     protected $table = 'transaksi';
     protected $fillable = [
-        'id_transaksi ',
+        'id_transaksi',
         'user_id',
-        'total_harga'
+        'total_harga',
+        'tgl_beli'
     ];
+
+    public function item()
+    {
+        return $this->hasMany(TransaksiItem::class, 'id_transaksi', 'id_transaksi');
+    }
 }

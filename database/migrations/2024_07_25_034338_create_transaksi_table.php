@@ -14,15 +14,10 @@ return new class extends Migration
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
             $table->char('id_transaksi', 5)->unique();
-            $table->unsignedBigInteger('user_id');
+            $table->string('user_id');
             $table->integer('total_harga');
             $table->date('tgl_beli');
             $table->timestamps();
-            
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->double('harga_satuan')->default(0);
             $table->integer('stok_product')->default(0);
             $table->string('id_user');
+            $table->string('id_supplier');
             $table->timestamps();
         });
     }

@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $data = Product::get();
+        $data = Product::where('id_user', auth()->user()->id)->get();
         return view('admin.master.product.index', [
             'data' => $data,
             'page_title' => 'Daftar Product',
@@ -49,19 +50,22 @@ class ProductController extends Controller
         $Code = 'PD';
 
         if ($dataProduct == null) {
-            $kodeSocials = $Code . '0001';
+            $kodeProduct = $Code . '0001';
         } else {
             $kode = substr($dataProduct->id_product, 2, 4) + 1;
             $kode = str_pad($kode, 4, '0', STR_PAD_LEFT);
-            $kodeSocials = $Code . $kode;
+            $kodeProduct = $Code . $kode;
         }
 
+        $id_supplier = Supplier::where('id_user', auth()->user()->id)->first('id_supplier');
+
         Product::create([
-            'id_product' => $kodeSocials,
+            'id_product' => $kodeProduct,
             'name_product' => $request->nama,
             'harga_satuan' => $request->harga,
             'stok_product' => $request->stok,
             'id_user' => auth()->user()->id,
+            'id_supplier' => $id_supplier->id_supplier,
         ]);
 
         return redirect('/admin/product');

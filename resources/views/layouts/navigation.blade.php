@@ -24,35 +24,45 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-file"></i>
-                        <p>
-                            Master
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('product.index') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Product</p>
-                            </a>
-                        </li>
-                        @if (Auth::user()->role != 'supplier')
+                @if (Auth::user()->role != 'user')
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>
+                                Master
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('supplier.index') }}" class="nav-link">
+                                <a href="{{ route('product.index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Supplier</p>
+                                    <p>Product</p>
                                 </a>
                             </li>
-                        @endif
-                    </ul>
-                </li>
+                            @if (Auth::user()->role != 'supplier')
+                                <li class="nav-item">
+                                    <a href="{{ route('supplier.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Supplier</p>
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+                @if (Auth::user()->role == 'user')
+                    <li class="nav-item">
+                        <a href="{{ route('supplier.index') }}" class="nav-link">
+                            <i class="far fa-list-alt nav-icon"></i>
+                            <p>Daftar Product</p>
+                        </a>
+                    </li>
+                @endif
                 @if (Auth::user()->role != 'supplier')
                     <li class="nav-header">Transaksi</li>
                     <li class="nav-item">
-                        <a href="" class="nav-link ">
+                        <a href="{{ route('transaksi.create') }}" class="nav-link ">
                             <i class="nav-icon fas fa-cart-plus"></i>
                             <p>
                                 Buat Transaksi
@@ -60,7 +70,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link ">
+                        <a href="{{ route('transaksi.index') }}" class="nav-link ">
                             <i class="nav-icon fas fa-th-list"></i>
                             <p>
                                 Transaksi
