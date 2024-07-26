@@ -7,10 +7,14 @@
     <div class="sidebar">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
+                @if (empty(Auth::user()->profile_photo_path))
                 <img src="{{ asset('img/no_photo.svg') }}" class="img-circle elevation-2" alt="User Image">
+                @else
+                <img src="{{ asset('storage/photo_user/'.Auth::user()->profile_photo_path) }}" class="img-circle elevation-2" alt="User Image">
+                @endif
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('profile.index') }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
         <nav class="mt-2">

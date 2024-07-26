@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\Master\ProductController;
 use App\Http\Controllers\Admin\Master\SupplierController;
+use App\Http\Controllers\Admin\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +25,8 @@ Route::group(['middleware' => ['auth', 'role:admin-supplier-user']], function ()
 
         Route::get('/export-items-pdf/{transaksi_id}', [TransaksiController::class, 'exportItemsPdf']);
         Route::get('/export-pdf', [TransaksiController::class, 'exportPdf'])->name('export-pdf');
+
+        Route::resource('profile', ProfileController::class);
     });
 });
 
